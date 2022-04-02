@@ -2,12 +2,13 @@ set -e
 set -u
 set -x
 
-mkdir -p obj/
+mkdir -p out/obj
 
 emcc \
 	-Wall -Werror \
-	-c test.c -o obj/test.o
+	-c test.c -o out/obj/test.o
 
+cd out
 
 emcc \
 	-s EXTRA_EXPORTED_RUNTIME_METHODS="['ccall']" \
