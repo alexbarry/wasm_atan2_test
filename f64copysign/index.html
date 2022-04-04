@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<body>
+
+<pre id="output_console">
+</pre>
+
+<script>
+
+function log(str) {
+	let dbg_console = document.getElementById("output_console")
+	console.log(str);
+	dbg_console.innerText += str + "\n";
+}
+
+WebAssembly.instantiateStreaming(fetch('test.wasm'))
+	.then(obj => {
+		let exports = obj.instance.exports;
+
+		log("copysign with 2nd arg as -1: " + exports.copysign_w_2nd_arg(-1));
+		log("copysign with const -1:      " + exports.copysign_w_consts());
+		log("copysign args (1.5708, -1):  " + exports.f64copysign(1.5707963267948966, -1));
+});
+
+</script>
+</body>
+</html>
