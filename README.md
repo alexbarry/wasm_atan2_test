@@ -1,5 +1,13 @@
 # WASM atan2 test
 
+**Update**: This is now fixed, and the current version of Firefox for Android in the Google play store has the fix! I raised [this bug in the Firefox for Android github repo](https://github.com/mozilla-mobile/fenix/issues/24565), which resulted in [this GeckoView bug being raised](https://bugzilla.mozilla.org/show_bug.cgi?id=1762899). And from [comment 3](https://bugzilla.mozilla.org/show_bug.cgi?id=1762899#c3), it looks like my copysign investigation helped. 
+
+It looks like the fix made it into Firefox for Android version 99.
+
+I'm super impressed that they were able to fix the bug right away, and that it made it to the play store within 2 weeks. (I guess it was actually 10 days?)
+
+## Original description
+
 This is a simple example page to calculate `atan2` from both:
 * JS `Math.atan2(y,x)` and
 * using the C standard library (`math.h`) `atan2(float y, float x)`, compiled to WASM.
@@ -14,7 +22,7 @@ Which I receive on Firefox desktop, and Chrome on Android.
 
 But on Firefox for Android, I received positive pi/2 for both.
 
-# f64copysign
+## f64copysign
 
 I have narrowed the problem down to how a single instruction is handled, `f64.copysign`. But only when the second argument to it is the first argument to the function?
 
